@@ -1,7 +1,9 @@
-input, textarea {
-  width:100%;
-  padding:10px;
+input,
+textarea {
+  width: 100%;
+  padding: 10px;
   border: 1px solid $grey;
+
   &.input {
     &--error {
       border-color: red;
@@ -14,13 +16,16 @@ label {
   display: block;
 }
 
+
 .form {
   background: white;
   padding: 2rem;
   box-shadow: $grad;
-  & + .form {
+
+  &+.form {
     margin-top: 4rem;
   }
+
   // I know this isn't bem but meh
   h2 {
     margin: 0;
@@ -28,5 +33,20 @@ label {
     padding-bottom: 2rem;
     margin-bottom: 2rem;
     border-bottom: 1px solid $grey;
+  }
+}
+
+.add-input {
+  box-shadow: 1px 2px 2px 1px #ccc;
+  margin: 1rem 0;
+  transition: all .3s ease-in-out;
+
+  &:hover {
+    box-shadow: 3px 3px 4px 3px #ccc;
+    border: 2px solid $yellow;
+  }
+
+  &:focus {
+    transform: scale(1.1);
   }
 }

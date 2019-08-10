@@ -501,11 +501,13 @@ p {
   font-size: 10rem;
   text-align: center; }
 
-input, textarea {
+input,
+textarea {
   width: 100%;
   padding: 10px;
   border: 1px solid #e6e6e6; }
-  input.input--error, textarea.input--error {
+  input.input--error,
+  textarea.input--error {
     border-color: red; }
 
 label {
@@ -524,6 +526,17 @@ label {
     padding-bottom: 2rem;
     margin-bottom: 2rem;
     border-bottom: 1px solid #e6e6e6; }
+
+.add-input {
+  box-shadow: 1px 2px 2px 1px #ccc;
+  margin: 1rem 0;
+  transition: all .3s ease-in-out; }
+  .add-input:hover {
+    box-shadow: 3px 3px 4px 3px #ccc;
+    border: 2px solid #FFC40E; }
+  .add-input:focus {
+    -ms-transform: scale(1.1);
+        transform: scale(1.1); }
 
 .search {
   position: relative;
@@ -1110,7 +1123,12 @@ label {
   background: #FFC40E;
   color: #303030;
   font-family: 'Panama';
-  font-weight: 600; }
+  font-weight: 600;
+  transition: .3s ease-in-out;
+  cursor: pointer; }
+  .button:hover {
+    background: #262161;
+    color: #fff; }
 
 .avatar {
   min-width: 50px;
