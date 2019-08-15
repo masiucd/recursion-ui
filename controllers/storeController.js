@@ -22,3 +22,13 @@ exports.createStore = async (req, res) => {
   );
   res.redirect(`/store/${store.slug}`);
 };
+
+// @ GET
+// @ get all stores
+// @ public
+
+exports.getStores = async (req, res) => {
+  const stores = await Store.find();
+  console.log(stores);
+  res.render('stores', { title: 'stores', stores });
+};

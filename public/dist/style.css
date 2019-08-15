@@ -1120,15 +1120,21 @@ label {
 
 .button {
   border: 0;
-  background: #FFC40E;
   color: #303030;
   font-family: 'Panama';
   font-weight: 600;
   transition: .3s ease-in-out;
-  cursor: pointer; }
+  cursor: pointer;
+  border: 2px solid #333;
+  background-image: linear-gradient(to right, #25b0a9 50%, #fee603 50%);
+  background-position: 0;
+  background-size: 200%;
+  transition: all 0.4s; }
   .button:hover {
-    background: #262161;
-    color: #fff; }
+    color: #333333;
+    background-position: -100%;
+    -ms-transform: scale(1.1);
+        transform: scale(1.1); }
 
 .avatar {
   min-width: 50px;

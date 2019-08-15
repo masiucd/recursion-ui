@@ -5,16 +5,22 @@
 
 .button {
   border: 0;
-  background: $yellow;
   color: $black;
   font-family: 'Panama';
   font-weight: 600;
   transition: .3s ease-in-out;
   cursor: pointer;
+  border: 2px solid #333;
+  background-image: linear-gradient(to right, #25b0a9 50%, #fee603 50%);
+  background-position: 0;
+  background-size: 200%;
+  transition: all 0.4s;
 
   &:hover {
-    background: $purple;
-    color: #fff;
+    // background: $purple;
+    color: #333333;
+    background-position: -100%;
+    transform: scale(1.1)
   }
 }
 
