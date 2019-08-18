@@ -527,16 +527,16 @@ label {
     margin-bottom: 2rem;
     border-bottom: 1px solid #e6e6e6; }
 
-input[type="text"],
+.text-input,
 textarea {
-  box-shadow: 1px 2px 2px 1px #ccc;
+  box-shadow: 1px 2px 2px 1px #3333;
   margin: 1rem 0;
   transition: all .3s ease-in-out; }
-  input[type="text"]:hover,
+  .text-input:hover,
   textarea:hover {
-    box-shadow: 3px 3px 4px 3px #ccc;
+    box-shadow: 3px 3px 4px 3px #3333;
     border: 2px solid #FFC40E; }
-  input[type="text"]:focus,
+  .text-input:focus,
   textarea:focus {
     -ms-transform: scale(1.1);
         transform: scale(1.1); }
