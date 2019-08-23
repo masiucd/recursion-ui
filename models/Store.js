@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
-mongoose.Promise = global.Promise;
+// mongoose.Promise = global.Promise;
 const slug = require('slugs'); // for the url friendly slug
 
 const storeSchema = Schema({
