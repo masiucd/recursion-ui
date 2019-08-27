@@ -54,6 +54,5 @@ exports.register = async (req, res, next) => {
   const user = new User({ name, email, password });
   const register = promisify(User.register, User);
   await register(user, password);
-  res.send('Created!');
   next();
 };
