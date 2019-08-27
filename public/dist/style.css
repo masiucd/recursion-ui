@@ -617,6 +617,8 @@ textarea {
     background: linear-gradient(20deg, red 0%, #c80000 100%); }
   .flash--info {
     background: linear-gradient(35deg, #f1e767 0%, #feb645 100%); }
+  .flash--warning {
+    background: linear-gradient(35deg, #291f67 0%, #027aff 100%); }
   .flash p {
     margin: 0; }
 
