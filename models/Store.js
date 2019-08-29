@@ -42,6 +42,11 @@ const storeSchema = Schema({
     },
   },
   photo: String,
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: 'You must supply an author',
+  },
 });
 
 storeSchema.pre('save', async function(next) {
