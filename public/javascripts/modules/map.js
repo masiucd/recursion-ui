@@ -1,14 +1,11 @@
 import axios from 'axios';
-
 import { $ } from './bling';
 
 const mapOptions = {
-  center: {
-    lat: 43.2,
-    lng: -79.8,
-  },
-  zoom: 8,
+  center: { lat: 43.2, lng: -79.8 },
+  zoom: 10,
 };
+
 function loadPlaces(map, lat = 43.2, lng = -79.8) {
   axios.get(`/api/stores/near?lat=${lat}&lng=${lng}`).then(res => {
     const places = res.data;
@@ -53,9 +50,13 @@ function loadPlaces(map, lat = 43.2, lng = -79.8) {
     map.fitBounds(bounds);
   });
 }
+
 function makeMap(mapDiv) {
   if (!mapDiv) return;
+  // make our map
   const map = new google.maps.Map(mapDiv, mapOptions);
+  loadPlaces(map);
+
   const input = $('[name="geolocate"]');
   const autocomplete = new google.maps.places.Autocomplete(input);
   autocomplete.addListener('place_changed', () => {
@@ -67,4 +68,5 @@ function makeMap(mapDiv) {
     );
   });
 }
+
 export default makeMap;

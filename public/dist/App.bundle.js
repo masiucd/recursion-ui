@@ -1001,23 +1001,17 @@ function ajaxHeart(e) {
   var _this = this;
 
   e.preventDefault();
-  console.log('hello');
-
+  console.log(this);
   _axios2.default.post(this.action).then(function (res) {
-    console.log(res.data);
-    // the inputs name is heart
     var isHearted = _this.heart.classList.toggle('heart__button--hearted');
-    console.log(isHearted);
     (0, _bling.$)('.heart-count').textContent = res.data.hearts.length;
     if (isHearted) {
       _this.heart.classList.add('heart__button--float');
       setTimeout(function () {
-        _this.heart.classList.remove('heart__button--float');
+        return _this.heart.classList.remove('heart__button--float');
       }, 2500);
     }
-  }).catch(function (err) {
-    console.error(err.message);
-  });
+  }).catch(console.error);
 }
 
 exports.default = ajaxHeart;
@@ -1044,12 +1038,10 @@ var _bling = __webpack_require__(1);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapOptions = {
-  center: {
-    lat: 43.2,
-    lng: -79.8
-  },
-  zoom: 8
+  center: { lat: 43.2, lng: -79.8 },
+  zoom: 10
 };
+
 function loadPlaces(map) {
   var lat = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 43.2;
   var lng = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : -79.8;
@@ -1091,9 +1083,13 @@ function loadPlaces(map) {
     map.fitBounds(bounds);
   });
 }
+
 function makeMap(mapDiv) {
   if (!mapDiv) return;
+  // make our map
   var map = new google.maps.Map(mapDiv, mapOptions);
+  loadPlaces(map);
+
   var input = (0, _bling.$)('[name="geolocate"]');
   var autocomplete = new google.maps.places.Autocomplete(input);
   autocomplete.addListener('place_changed', function () {
@@ -1101,6 +1097,7 @@ function makeMap(mapDiv) {
     loadPlaces(map, place.geometry.location.lat(), place.geometry.location.lng());
   });
 }
+
 exports.default = makeMap;
 
 /***/ }),

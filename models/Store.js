@@ -1,53 +1,59 @@
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
-// mongoose.Promise = global.Promise;
+mongoose.Promise = global.Promise;
 const slug = require('slugs'); // for the url friendly slug
 
-const storeSchema = Schema({
-  name: {
-    type: String,
-    trim: true,
-    required: 'Please enter a store name',
-  },
-  slug: String,
-  description: {
-    type: String,
-    trim: true,
-  },
-  tags: [String],
-  date: {
-    type: Date,
-    default: Date.now(),
-  },
-  created: {
-    type: Date,
-    default: Date.now,
-  },
-  location: {
-    type: {
+const storeSchema = Schema(
+  {
+    name: {
       type: String,
-      default: 'Point',
+      trim: true,
+      required: 'Please enter a store name',
     },
-
-    coordinates: [
-      {
-        type: Number,
-        required: 'You must supply coordinates!',
+    slug: String,
+    description: {
+      type: String,
+      trim: true,
+    },
+    tags: [String],
+    date: {
+      type: Date,
+      default: Date.now(),
+    },
+    created: {
+      type: Date,
+      default: Date.now,
+    },
+    location: {
+      type: {
+        type: String,
+        default: 'Point',
       },
-    ],
-    address: {
-      type: String,
-      required: 'You must supply an address',
+
+      coordinates: [
+        {
+          type: Number,
+          required: 'You must supply coordinates!',
+        },
+      ],
+      address: {
+        type: String,
+        required: 'You must supply an address',
+      },
+    },
+    photo: String,
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: 'You must supply an author',
     },
   },
-  photo: String,
-  author: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: 'You must supply an author',
-  },
-});
+  {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  }
+);
 
 // define indexes
 storeSchema.index({
@@ -78,5 +84,13 @@ storeSchema.statics.getTagList = function() {
     { $sort: { count: -1 } },
   ]);
 };
+
+// find reviews where the stores _id property === reviews store property
+// similar to a join in a SQL DB
+storeSchema.virtual('reviews', {
+  ref: 'Review', // what model to link?
+  localField: '_id', // which field on the store?
+  foreignField: 'store', // which field on the review?
+});
 
 module.exports = mongoose.model('Store', storeSchema);
