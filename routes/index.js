@@ -64,6 +64,8 @@ router.post(
   authController.isLoggedIn,
   catchErrors(reviewController.addReview)
 );
+router.get('/top', catchErrors(storeController.getTopStores));
+
 // api
 
 router.get('/api/search', catchErrors(storeController.searchStores));

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const {Schema} = mongoose;
+const { Schema } = mongoose;
 mongoose.Promise = global.Promise;
 const md5 = require('md5');
 const validator = require('validator');
