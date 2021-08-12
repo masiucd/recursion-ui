@@ -1,6 +1,8 @@
 import {css} from "@emotion/css"
 import React, {FC, useState} from "react"
 
+import File from "./components/icons/File"
+import Folder from "./components/icons/Folder"
 import data from "./data/tree-data.json"
 
 const getTreeData = () => {
@@ -22,18 +24,32 @@ interface WrapperProps {
   level: number
 }
 const Wrapper: FC<WrapperProps> = ({item, level, children}) => {
-  const [on, setOn] = useState(false)
-
+  const [isOn, setIsOn] = useState(false)
+  const icon = item.hasChildren ? isOn ? <Folder /> : <Folder /> : <File />
   return (
-    <div
-      className={css`
-        background: none;
-        border: none;
-        margin-left: ${level * 25}px;
-      `}>
-      <p>{item.text}</p>
-      {children}
-    </div>
+    <section>
+      <button
+        onClick={() => setIsOn((p) => !p)}
+        className={css`
+          display: flex;
+          margin-left: ${level * 20}px;
+          margin-bottom: 8px;
+          background: none;
+          min-width: 5rem;
+          align-items: center;
+          justify-content: space-between;
+          cursor: pointer;
+        `}>
+        <span
+          className={css`
+            font-size: 0.8rem;
+          `}>
+          {item.text}
+        </span>
+        {icon}
+      </button>
+      {isOn && <div>{children}</div>}
+    </section>
   )
 }
 
@@ -42,7 +58,7 @@ interface TreeProps {
   parentId?: number
   level?: number
 }
-const Tree = ({treeData, parentId = 0, level = 0}: TreeProps) => {
+const Tree: FC<TreeProps> = ({treeData, parentId = 0, level = 0}) => {
   const items = treeData
     .filter((item) => item.parentId === parentId)
     .sort((a, b) => (a.text > b.text ? 1 : -1))
