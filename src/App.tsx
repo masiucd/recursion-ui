@@ -10,14 +10,12 @@ const Container = styled.main`
   margin: 2rem auto;
 `
 
-const App = () => {
-  return (
-    <div>
-      <Container>
-        <Tree treeData={getTreeData()} />
-      </Container>
-    </div>
-  )
-}
+const App = () => (
+  <div>
+    <Container>
+      <Tree treeData={getTreeData()} />
+    </Container>
+  </div>
+)
 
 export default App

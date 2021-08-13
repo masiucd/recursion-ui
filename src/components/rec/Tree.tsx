@@ -40,14 +40,26 @@ interface WrapperProps {
   item: Item
   level: number
 }
+
+const getIcon = (hasChildren: boolean, isOn: boolean) => {
+  switch (true) {
+    case hasChildren && isOn:
+      return <FolderOpen />
+    case hasChildren && !isOn:
+      return <FolderClosed />
+    default:
+      return <File />
+  }
+}
+
 const Wrapper: FC<WrapperProps> = ({item, level, children}) => {
   const [isOn, setIsOn] = useState(false)
-  const icon = item.hasChildren ? isOn ? <FolderOpen /> : <FolderClosed /> : <File />
+
   return (
     <section>
       <button onClick={() => setIsOn((p) => !p)} className={buttonStyles(level)}>
         <Text>{item.text}</Text>
-        <Icon>{icon}</Icon>
+        <Icon>{getIcon(item.hasChildren, isOn)}</Icon>
       </button>
       {isOn && <div>{children}</div>}
     </section>
