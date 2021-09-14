@@ -1,11 +1,20 @@
-export interface Conversion {
+export interface ConversationItem {
   id: number
   title: string
   parentId: null | number
   type: string
   text: string
 }
-const conversationsList: Array<Conversion> = [
+export interface ConversationItemWithChildren {
+  id: number
+  title: string
+  parentId: null | number
+  type: string
+  text: string
+  children: Array<ConversationItemWithChildren>
+}
+
+const conversationsList: Array<ConversationItem> = [
   {
     id: 1,
     title: "I. need help",
@@ -37,9 +46,9 @@ const conversationsList: Array<Conversion> = [
 ]
 
 export const makeTreeDataStructure = (
-  list: Array<Conversion>,
+  list: Array<ConversationItem>,
   parentId: null | number = null,
-): Array<Conversion> => {
+): Array<ConversationItemWithChildren> => {
   const items = list.filter((node) => node.parentId === parentId)
   const result = []
   for (const node of items) {
@@ -50,13 +59,13 @@ export const makeTreeDataStructure = (
 
 // with reduce
 export const makeTreeDataStructureFp = (
-  list: Array<Conversion>,
+  list: Array<ConversationItem>,
   parentId: null | number = null,
-): Array<Conversion> => {
+): Array<ConversationItemWithChildren> => {
   return list
     .filter((node) => node.parentId === parentId)
     .reduce(
-      (tree: Array<Conversion>, node: Conversion) => [
+      (tree: Array<ConversationItemWithChildren>, node: ConversationItem) => [
         ...tree,
         {...node, children: makeTreeDataStructure(list, node.id)},
       ],
