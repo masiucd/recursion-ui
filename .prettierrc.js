@@ -1,13 +1,13 @@
 module.exports = {
   semi: false,
-  trailingComma: 'all',
+  trailingComma: "all",
   singleQuote: false,
   printWidth: 90,
   tabWidth: 2,
   jsxBracketSameLine: true,
-  endOfLine: 'auto',
+  endOfLine: "auto",
   bracketSpacing: false,
-};
+}
 
 // {
 //   "arrowParens": "always",
