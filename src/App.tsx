@@ -1,21 +1,15 @@
-import styled from "@emotion/styled"
 import React from "react"
+import {BrowserRouter as Router} from "react-router-dom"
 
-import Tree from "./components/rec/Tree"
-import {getTreeData} from "./util/getData"
-
-const Container = styled.main`
-  max-width: 900px;
-  min-height: 100vh;
-  margin: 2rem auto;
-`
+import Layout from "./components/app/layout"
+import Routes from "./routes"
 
 const App = () => (
-  <div>
-    <Container>
-      <Tree treeData={getTreeData()} />
-    </Container>
-  </div>
+  <Router>
+    <Layout>
+      <Routes />
+    </Layout>
+  </Router>
 )
 
 export default App
