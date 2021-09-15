@@ -3,6 +3,8 @@
 Recursion is something we can use when building front end applications as well, it sometimes it is the best and most elegant solution.
 Since React is just a function we can use recursion to render our elements on the page.
 
+s
+
 ## Recursive folder structure
 
 ![rec-1](./rec-1.png)
