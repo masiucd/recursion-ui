@@ -9,20 +9,20 @@ const GlobalStyles = () => {
           --nunito: "Nunito Sans", sans-serif;
 
           /* colors */
-          --bg: #252932;
+          --bg: #fff;
           --bg-2: #191c21;
-          --text: #fff;
-          --primary: #f56f6c;
-          --highlight: #195962;
-          --bg-900: #313642;
-          --bg-800: #3d4452;
-          --bg-700: #495163;
-          --bg-600: #555e73;
-          --bg-500: #616b83;
-          --bg-400: #6d7993;
-          --bg-300: #7d889f;
-          --bg-200: #8e97ab;
-          --bg-100: #9ea6b7;
+          --text: #252932;
+          --primary: #f5487f;
+          --highlight: #2d469f;
+          --bg-900: #d3d7da;
+          --bg-800: #d7dbdd;
+          --bg-700: #dcdfe1;
+          --bg-600: #e0e3e5;
+          --bg-500: #e5e7e9;
+          --bg-400: #e9ebec;
+          --bg-300: #edeff0;
+          --bg-200: #f2f3f4;
+          --bg-100: #f6f7f8;
           /* elevations */
           --sm-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
           --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),

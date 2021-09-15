@@ -2,7 +2,7 @@ interface Props {
   width?: number
   height?: number
 }
-const FolderOpen = ({width = 50, height = 50}: Props) => (
+const FolderOpen = ({width = 30, height = 30}: Props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={width}

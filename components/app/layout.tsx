@@ -4,10 +4,8 @@ import {FC, Fragment} from "react"
 import Header from "./header"
 
 const mainStyles = css`
-  /* max-width: 10rem; */
-  /* margin: 1rem auto; */
-  border: 1px solid #3232;
-  /* background: red; */
+  max-width: 100rem;
+  margin: 1rem auto;
 `
 
 const Layout: FC = ({children}) => (
