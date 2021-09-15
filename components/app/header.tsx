@@ -1,11 +1,8 @@
 import styled from "@emotion/styled"
 import {elevations, sizes} from "@styles/styles"
 import Link from "next/link"
-const routes = [
-  {name: "home", path: "/"},
-  {name: "folders", path: "/folders"},
-  {name: "conversations", path: "/conversations"},
-]
+
+import routes from "../../data/routes.json"
 
 const HeaderStyles = styled.header`
   min-height: ${sizes.headerHeight};
