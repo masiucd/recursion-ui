@@ -7,6 +7,7 @@ import styled from "@emotion/styled"
 import useToggle from "@hooks/toggle"
 import {colorsMain, elevations} from "@styles/styles"
 import {FC, Fragment} from "react"
+
 import {Node} from "./types"
 
 const renderIcon = (on: boolean, hasChildren: boolean) => {

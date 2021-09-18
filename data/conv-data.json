@@ -1,0 +1,34 @@
+[
+  {"id": 1, "parentId": null, "text": "Hello Bob", "type": "sport"},
+  {"id": 2, "parentId": 1, "text": "Hi Tina", "type": "sport"},
+  {
+    "id": 3,
+    "parentId": 2,
+    "text": "Should we watch the game tonight?",
+    "type": "sport"
+  },
+  {"id": 4, "parentId": 3, "text": "Of course!", "type": "sport"},
+  {"id": 5, "parentId": 4, "text": "Great", "type": "sport"},
+
+  {
+    "id": 6,
+    "parentId": null,
+    "text": "What should we cook tonight?",
+    "type": "food"
+  },
+  {
+    "id": 7,
+    "parentId": 6,
+    "text": "Maybe we should buy some Pizza?",
+    "type": "food"
+  },
+  {"id": 8, "parentId": 7, "text": "Great idea, let's do it", "type": "food"},
+  {"id": 9, "parentId": 8, "text": "I want Capri", "type": "food"},
+  {
+    "id": 10,
+    "parentId": 9,
+    "text": "I will take the new one with shrimps and seafood",
+    "type": "food"
+  },
+  {"id": 11, "parentId": 10, "text": "Let's go", "type": "food"}
+]
