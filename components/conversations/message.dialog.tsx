@@ -1,8 +1,7 @@
 import {css} from "@emotion/react"
 import styled from "@emotion/styled"
-import useToggle from "@hooks/toggle"
 import {bgNuisances, colorsMain, elevations} from "@styles/styles"
-import {FC, Fragment} from "react"
+import {FC, Fragment, useEffect, useState} from "react"
 import Modal from "react-modal"
 
 import {ConversationNode} from "./types"
@@ -29,7 +28,26 @@ interface Props {
   item: ConversationNode | null
 }
 
+function useExpended(
+  id: number,
+): [(id: number) => void, (id: number) => boolean] {
+  const [state, setState] = useState<Array<number>>([])
+  const isExpended = (id: number): boolean => state.includes(id)
+  const toggleExpended = (id: number) => {
+    setState((prev) => {
+      return isExpended(id)
+        ? prev.filter((itemId) => itemId !== id)
+        : [...prev, id]
+    })
+  }
+  useEffect(() => {
+    setState([id])
+  }, [id])
+  return [toggleExpended, isExpended]
+}
+
 const MessageDialog: FC<Props> = ({isDialogOpen, closeDialog, item}) => {
+  const [toggleExpended, isExpended] = useExpended(item?.id ?? 0)
   const items = [item] as ConversationNode[]
   return (
     <Modal
@@ -37,13 +55,19 @@ const MessageDialog: FC<Props> = ({isDialogOpen, closeDialog, item}) => {
       onRequestClose={closeDialog}
       style={customStyles}
     >
-      <Conversation items={items} />
+      <Conversation
+        items={items}
+        isExpended={isExpended}
+        toggleExpended={toggleExpended}
+      />
     </Modal>
   )
 }
 
 interface RowProps {
   node: ConversationNode
+  isExpended: (id: number) => boolean
+  toggleExpended: (id: number) => void
 }
 
 const contentStyles = css`
@@ -75,51 +99,59 @@ const messageStyles = css`
   justify-content: center;
   padding: 0.5rem;
 `
-const Row: FC<RowProps> = ({children, node}) => {
-  const [isOpen, toggle] = useToggle()
-  return (
-    <Fragment>
-      <div css={contentStyles}>
-        <RowStyles onClick={toggle}>
-          <p>
-            Name: <span>{node.name}</span>
-          </p>
-          <p>
-            Subject: <span>{node.type}</span>
-          </p>
-        </RowStyles>
-        {isOpen && (
-          <div css={messageStyles}>
-            {" "}
-            <p>{node.text}</p>
-          </div>
-        )}
-      </div>
-      {children}
-    </Fragment>
-  )
-}
+const Row: FC<RowProps> = ({children, node, isExpended, toggleExpended}) => (
+  <Fragment>
+    <div css={contentStyles}>
+      <RowStyles onClick={() => toggleExpended(node.id)}>
+        <p>
+          Name: <span>{node.name}</span>
+        </p>
+        <p>
+          Subject: <span>{node.type}</span>
+        </p>
+      </RowStyles>
+      {isExpended(node.id) && (
+        <div css={messageStyles}>
+          {" "}
+          <p>{node.text}</p>
+        </div>
+      )}
+    </div>
+    {children}
+  </Fragment>
+)
 
 interface ConversationProps {
   items: ConversationNode[]
   level?: number
   parentId?: number | null
+  isExpended: (id: number) => boolean
+  toggleExpended: (id: number) => void
 }
 const Conversation: FC<ConversationProps> = ({
   items,
   parentId = null,
   level = 0,
+  isExpended,
+  toggleExpended,
 }): JSX.Element[] | any => {
   const nodes = items.filter(
     (item: ConversationNode) => item?.parentId === parentId,
   )
   if (!items) return null
   return nodes.map((node: ConversationNode) => (
-    <Row key={node.id} node={node}>
+    <Row
+      key={node.id}
+      node={node}
+      isExpended={isExpended}
+      toggleExpended={toggleExpended}
+    >
       <Conversation
         items={node.children}
         level={level + 1}
         parentId={node.id}
+        isExpended={isExpended}
+        toggleExpended={toggleExpended}
       />
     </Row>
   ))

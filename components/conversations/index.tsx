@@ -24,13 +24,11 @@ function makeTreeConversations(
 const Wrapper = styled.div`
   max-width: 900px;
   margin: 1rem auto;
-  border: 2px solid red;
   display: flex;
   flex-flow: column wrap;
 `
 
 const Box = styled.div`
-  border: 2px solid red;
   display: flex;
   justify-content: space-around;
   padding: 1rem;
