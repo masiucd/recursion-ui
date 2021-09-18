@@ -7,7 +7,7 @@ import Header from "./header"
 const mainStyles = css`
   max-width: 90rem;
   margin: 1rem auto;
-  height: calc(100vh - 20rem);
+  min-height: calc(100vh - 20rem);
 `
 
 const Layout: FC = ({children}) => (

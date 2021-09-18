@@ -1,4 +1,5 @@
 import styled from "@emotion/styled"
+import {bgNuisances, colorsMain} from "@styles/styles"
 import type {NextPage} from "next"
 import Head from "next/head"
 import Link from "next/link"
@@ -7,19 +8,30 @@ import {Fragment} from "react"
 import routes from "../data/routes.json"
 
 const Page = styled.div`
-  height: 100%;
-  border: 1px solid #000;
+  min-height: 60vh;
+  margin: 1rem auto;
   display: flex;
   align-items: center;
   justify-content: center;
 `
 
 const RoutesList = styled.ul`
-  border: 1px solid #000;
+  background-color: ${bgNuisances.bg500};
   display: flex;
   flex-flow: column wrap;
   align-items: center;
-  width: 100%;
+  padding: 1rem;
+  border-radius: 4px;
+  min-width: 25em;
+  li {
+    font-size: 2rem;
+    text-transform: uppercase;
+    transition: 200ms ease-in-out all;
+    &:hover {
+      transform: rotate(2deg) scale(1.1);
+      color: ${colorsMain.primary};
+    }
+  }
 `
 
 const Home: NextPage = () => {

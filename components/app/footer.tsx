@@ -8,9 +8,11 @@ const Footer = () => {
       css={css`
         min-height: ${sizes.footerHeight};
         box-shadow: ${elevations.inner};
+        display: flex;
+        align-items: center;
       `}
     >
-      <h3>Footer</h3>
+      <h3>Recursion with React</h3>
     </footer>
   )
 }
