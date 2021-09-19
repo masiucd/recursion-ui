@@ -1,7 +1,8 @@
 import {css} from "@emotion/react"
 import styled from "@emotion/styled"
+import {useExpended} from "@hooks/expended"
 import {bgNuisances, colorsMain, elevations} from "@styles/styles"
-import {FC, Fragment, useEffect, useState} from "react"
+import {FC, Fragment} from "react"
 import Modal from "react-modal"
 
 import {ConversationNode} from "./types"
@@ -26,24 +27,6 @@ interface Props {
   isDialogOpen: boolean
   closeDialog: () => void
   item: ConversationNode | null
-}
-
-function useExpended(
-  id: number,
-): [(id: number) => void, (id: number) => boolean] {
-  const [state, setState] = useState<Array<number>>([])
-  const isExpended = (id: number): boolean => state.includes(id)
-  const toggleExpended = (id: number) => {
-    setState((prev) => {
-      return isExpended(id)
-        ? prev.filter((itemId) => itemId !== id)
-        : [...prev, id]
-    })
-  }
-  useEffect(() => {
-    setState([id])
-  }, [id])
-  return [toggleExpended, isExpended]
 }
 
 const MessageDialog: FC<Props> = ({isDialogOpen, closeDialog, item}) => {
