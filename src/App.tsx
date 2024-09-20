@@ -47,7 +47,9 @@ function Node({node}: {node: Node}) {
 	return (
 		<>
 			<div className="flex items-center gap-1 mb-3" key={node.name}>
-				{node.nodes.length > 0 && <ChevronRight size={20} />}
+				{node.nodes.length > 0 && (
+					<ChevronRight size={20} className={open ? "rotate-90" : ""} />
+				)}
 				{node.nodes.length > 0 ? (
 					<button
 						type="button"
@@ -55,7 +57,7 @@ function Node({node}: {node: Node}) {
 							setOpen((p) => !p);
 						}}
 					>
-						<Folder size={20} />
+						{open ? <FolderOpen size={20} /> : <Folder size={20} />}
 					</button>
 				) : (
 					<File size={20} />
