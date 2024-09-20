@@ -1,11 +1,19 @@
 import {ChevronRight, File, Folder, FolderOpen} from "lucide-react";
 import "./App.css";
 
-const nodesData = [
+type Node = {name: string; nodes: Node[]};
+const nodesData: Node[] = [
 	{
 		name: "Home",
 		nodes: [
-			{name: "Movies", nodes: []},
+			{
+				name: "Movies",
+				nodes: [
+					{name: "Action", nodes: []},
+					{name: "Drama", nodes: []},
+					{name: "Comedy", nodes: [{name: "Click", nodes: []}]},
+				],
+			},
 			{
 				name: "Music",
 				nodes: [
@@ -22,22 +30,9 @@ const nodesData = [
 function App() {
 	return (
 		<main>
-			<div className="flex flex-col gap-3">
+			<div className="flex flex-col">
 				{nodesData.map((n) => (
-					<>
-						<div className="flex items-center gap-1" key={n.name}>
-							<ChevronRight size={20} />
-							<Folder size={20} />
-							<span>{n.name}</span>
-						</div>
-						{n.nodes.map((n) => (
-							<div className="flex items-center gap-1 ml-5" key={n.name}>
-								<ChevronRight size={20} />
-								<Folder size={20} />
-								<span>{n.name}</span>
-							</div>
-						))}
-					</>
+					<Node key={n.name} node={n} className="ml-5" />
 				))}
 			</div>
 		</main>
@@ -45,3 +40,20 @@ function App() {
 }
 
 export default App;
+
+function Node({node, className}: {node: Node; className?: string}) {
+	return (
+		<>
+			<div className="flex items-center gap-1 mb-3" key={node.name}>
+				<ChevronRight size={20} />
+				<Folder size={20} />
+				<span>{node.name}</span>
+			</div>
+			<div className="ml-5 mb-3">
+				{node.nodes.map((n) => (
+					<Node key={n.name} node={n} />
+				))}
+			</div>
+		</>
+	);
+}
