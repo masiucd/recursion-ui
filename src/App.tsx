@@ -1,7 +1,7 @@
 import {ChevronRight, File, Folder, FolderOpen} from "lucide-react";
 import "./App.css";
 import {type ClassValue, clsx} from "clsx";
-import {useState} from "react";
+import {useCallback, useState} from "react";
 import {twMerge} from "tailwind-merge";
 
 function cn(...inputs: ClassValue[]) {
@@ -42,30 +42,56 @@ let nodesData: readonly Node[] = Object.freeze([
 ]);
 
 function App() {
+	let [selectedFile, setSelectedFile] = useState<Node | null>(null);
+	const selectFile = useCallback((file: Node): void => {
+		setSelectedFile(file);
+	}, []);
+
 	return (
 		<main>
-			<div className="flex flex-col">
-				{nodesData.map((n) => (
-					<Node key={n.name} node={n} />
-				))}
+			<div className="flex max-w-[900px] justify-between">
+				<div>
+					{nodesData.map((n) => (
+						<Node key={n.name} node={n} selectFile={selectFile} />
+					))}
+				</div>
+				<div>
+					{selectedFile ? (
+						<div>
+							<h2>
+								<span className="font-semibold">{selectedFile.name}</span> has
+								been selected
+							</h2>
+						</div>
+					) : (
+						<p>Select a file</p>
+					)}
+				</div>
 			</div>
 		</main>
 	);
 }
 
-export default App;
-
-function Node({node}: {node: Node}) {
+function Node({
+	node,
+	selectFile,
+}: {node: Node; selectFile: (file: Node) => void}) {
 	let [open, setOpen] = useState(false);
 	let hasChildNodes = node.nodes.length > 0;
 	return (
 		<>
 			<button
-				// TODO
-				className={cn("mb-3 flex items-center gap-1", !hasChildNodes && "ml-1")}
+				className={cn(
+					"flex items-center gap-1",
+					hasChildNodes ? "mb-3" : "ml-1",
+				)}
 				type="button"
 				onClick={() => {
-					setOpen((p) => !p);
+					if (hasChildNodes) {
+						setOpen((p) => !p);
+					} else {
+						selectFile(node);
+					}
 				}}
 				key={node.name}
 			>
@@ -88,10 +114,12 @@ function Node({node}: {node: Node}) {
 			{open && (
 				<div className="mb-3 ml-5">
 					{node.nodes.map((n) => (
-						<Node key={n.name} node={n} />
+						<Node key={n.name} node={n} selectFile={selectFile} />
 					))}
 				</div>
 			)}
 		</>
 	);
 }
+
+export default App;
