@@ -17,3 +17,4 @@ This is a simple example of how to use recursion in React. The example is a simp
 - [React](https://reactjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
+- [Biome JS](https://biomejs.dev/)
