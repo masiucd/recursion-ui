@@ -1,5 +1,6 @@
 import {ChevronRight, File, Folder, FolderOpen} from "lucide-react";
 import "./App.css";
+import {useState} from "react";
 
 type Node = {name: string; nodes: Node[]};
 const nodesData: Node[] = [
@@ -32,7 +33,7 @@ function App() {
 		<main>
 			<div className="flex flex-col">
 				{nodesData.map((n) => (
-					<Node key={n.name} node={n} className="ml-5" />
+					<Node key={n.name} node={n} />
 				))}
 			</div>
 		</main>
@@ -41,19 +42,33 @@ function App() {
 
 export default App;
 
-function Node({node, className}: {node: Node; className?: string}) {
+function Node({node}: {node: Node}) {
+	let [open, setOpen] = useState(false);
 	return (
 		<>
 			<div className="flex items-center gap-1 mb-3" key={node.name}>
-				<ChevronRight size={20} />
-				<Folder size={20} />
+				{node.nodes.length > 0 && <ChevronRight size={20} />}
+				{node.nodes.length > 0 ? (
+					<button
+						type="button"
+						onClick={() => {
+							setOpen((p) => !p);
+						}}
+					>
+						<Folder size={20} />
+					</button>
+				) : (
+					<File size={20} />
+				)}
 				<span>{node.name}</span>
 			</div>
-			<div className="ml-5 mb-3">
-				{node.nodes.map((n) => (
-					<Node key={n.name} node={n} />
-				))}
-			</div>
+			{open && (
+				<div className="ml-5 mb-3">
+					{node.nodes.map((n) => (
+						<Node key={n.name} node={n} />
+					))}
+				</div>
+			)}
 		</>
 	);
 }
