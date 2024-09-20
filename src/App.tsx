@@ -1,9 +1,15 @@
 import {ChevronRight, File, Folder, FolderOpen} from "lucide-react";
 import "./App.css";
+import {type ClassValue, clsx} from "clsx";
 import {useState} from "react";
+import {twMerge} from "tailwind-merge";
+
+function cn(...inputs: ClassValue[]) {
+	return twMerge(clsx(inputs));
+}
 
 type Node = {name: string; nodes: Node[]};
-const nodesData: Node[] = [
+let nodesData: readonly Node[] = Object.freeze([
 	{
 		name: "Home",
 		nodes: [
@@ -33,7 +39,7 @@ const nodesData: Node[] = [
 			{name: "Pictures", nodes: []},
 		],
 	},
-];
+]);
 
 function App() {
 	return (
@@ -51,28 +57,36 @@ export default App;
 
 function Node({node}: {node: Node}) {
 	let [open, setOpen] = useState(false);
+	let hasChildNodes = node.nodes.length > 0;
 	return (
 		<>
-			<div className="flex items-center gap-1 mb-3" key={node.name}>
-				{node.nodes.length > 0 && (
-					<ChevronRight size={20} className={open ? "rotate-90" : ""} />
-				)}
-				{node.nodes.length > 0 ? (
-					<button
-						type="button"
-						onClick={() => {
-							setOpen((p) => !p);
-						}}
-					>
-						{open ? <FolderOpen size={20} /> : <Folder size={20} />}
-					</button>
-				) : (
-					<File size={20} />
-				)}
-				<span>{node.name}</span>
-			</div>
+			<button
+				// TODO
+				className={cn("mb-3 flex items-center gap-1", !hasChildNodes && "ml-1")}
+				type="button"
+				onClick={() => {
+					setOpen((p) => !p);
+				}}
+				key={node.name}
+			>
+				<>
+					{hasChildNodes && (
+						<ChevronRight size={20} className={open ? "rotate-90" : ""} />
+					)}
+					{hasChildNodes ? (
+						open ? (
+							<FolderOpen size={20} />
+						) : (
+							<Folder size={20} />
+						)
+					) : (
+						<File size={20} />
+					)}
+					<span>{node.name}</span>
+				</>
+			</button>
 			{open && (
-				<div className="ml-5 mb-3">
+				<div className="mb-3 ml-5">
 					{node.nodes.map((n) => (
 						<Node key={n.name} node={n} />
 					))}
