@@ -10,8 +10,15 @@ const nodesData: Node[] = [
 			{
 				name: "Movies",
 				nodes: [
-					{name: "Action", nodes: []},
-					{name: "Drama", nodes: []},
+					{
+						name: "Action",
+						nodes: [
+							{name: "Die hard", nodes: []},
+							{name: "Rambo", nodes: []},
+							{name: "Terminator", nodes: []},
+						],
+					},
+					{name: "Drama", nodes: [{name: "Titanic", nodes: []}]},
 					{name: "Comedy", nodes: [{name: "Click", nodes: []}]},
 				],
 			},
