@@ -16,9 +16,29 @@
   "organizeImports": {
     "enabled": true
   },
+
   "linter": {
     "enabled": true,
+
     "rules": {
+      "nursery": {
+        "useSortedClasses": {
+          "fix": "safe",
+          "level": "warn",
+          "options": {
+            "attributes": ["classList"],
+            "functions": ["clsx", "cva", "tw"]
+          }
+        }
+      },
+      "correctness": {
+        "noUnusedImports": "error",
+        "noUnusedVariables": "error",
+        "useExhaustiveDependencies": "error"
+      },
+      "a11y": {
+        "all": true
+      },
       "recommended": true,
       "style": {
         "useConst": "off"
