@@ -6,7 +6,14 @@ const nodesData = [
 		name: "Home",
 		nodes: [
 			{name: "Movies", nodes: []},
-			{name: "Music", nodes: []},
+			{
+				name: "Music",
+				nodes: [
+					{name: "2000", nodes: []},
+					{name: "2010", nodes: []},
+					{name: "2020", nodes: []},
+				],
+			},
 			{name: "Pictures", nodes: []},
 		],
 	},
