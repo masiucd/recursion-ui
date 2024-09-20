@@ -25,9 +25,15 @@
       }
     }
   },
+  "css": {
+    "linter": {
+      "enabled": true
+    }
+  },
   "javascript": {
     "formatter": {
       "quoteStyle": "double",
+      "trailingCommas": "all",
       "semicolons": "always",
       "bracketSpacing": false,
       "lineWidth": 80
