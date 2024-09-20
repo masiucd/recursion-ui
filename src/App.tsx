@@ -1,12 +1,7 @@
 import {ChevronRight, File, Folder, FolderOpen} from "lucide-react";
 import "./App.css";
-import {type ClassValue, clsx} from "clsx";
 import {useCallback, useState} from "react";
-import {twMerge} from "tailwind-merge";
-
-function cn(...inputs: ClassValue[]) {
-	return twMerge(clsx(inputs));
-}
+import {cn} from "./utils/cn";
 
 type Node = {name: string; nodes: Node[]};
 let nodesData: readonly Node[] = Object.freeze([
@@ -31,12 +26,54 @@ let nodesData: readonly Node[] = Object.freeze([
 			{
 				name: "Music",
 				nodes: [
-					{name: "2000", nodes: []},
-					{name: "2010", nodes: []},
-					{name: "2020", nodes: []},
+					{
+						name: "2000",
+						nodes: [
+							{
+								name: "Pop",
+								nodes: [
+									{name: "Britney Spears", nodes: []},
+									{name: "Backstreet Boys", nodes: []},
+								],
+							},
+							{
+								name: "Rock",
+								nodes: [
+									{name: "Linkin Park", nodes: []},
+									{name: "Nickelback", nodes: []},
+								],
+							},
+						],
+					},
+					{
+						name: "2010",
+						nodes: [{name: "Pop", nodes: [{name: "Justin Bieber", nodes: []}]}],
+					},
+					{
+						name: "2020",
+						nodes: [{name: "Pop", nodes: [{name: "Dua Lipa", nodes: []}]}],
+					},
 				],
 			},
-			{name: "Pictures", nodes: []},
+			{
+				name: "Pictures",
+				nodes: [
+					{
+						name: "Selfies",
+						nodes: [
+							{name: "me.jpg", nodes: []},
+							{name: "me2.jpg", nodes: []},
+						],
+					},
+					{
+						name: "Vacation",
+						nodes: [
+							{name: "beach.jpg", nodes: []},
+							{name: "mountain.jpg", nodes: []},
+						],
+					},
+				],
+			},
 		],
 	},
 ]);
