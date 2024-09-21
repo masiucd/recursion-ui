@@ -1,115 +1,48 @@
 import {ChevronDown, ChevronRight, File, Folder} from "lucide-solid";
 import {createSignal} from "solid-js";
 import {For, Show} from "solid-js/web";
+import {type FileSystemNode, systemDataData} from "./data";
 import {cn} from "./utils";
-
-type Node = {
-	name: string;
-	nodes: readonly Node[];
-};
-
-let nodesData: readonly Node[] = Object.freeze([
-	{
-		name: "Home",
-		nodes: [
-			{
-				name: "Movies",
-				nodes: [
-					{
-						name: "Action",
-						nodes: [
-							{name: "Die hard", nodes: []},
-							{name: "Rambo", nodes: []},
-							{name: "Terminator", nodes: []},
-						],
-					},
-					{name: "Drama", nodes: [{name: "Titanic", nodes: []}]},
-					{name: "Comedy", nodes: [{name: "Click", nodes: []}]},
-				],
-			},
-			{
-				name: "Music",
-				nodes: [
-					{
-						name: "2000",
-						nodes: [
-							{
-								name: "Pop",
-								nodes: [
-									{name: "Britney Spears", nodes: []},
-									{name: "Backstreet Boys", nodes: []},
-								],
-							},
-							{
-								name: "Rock",
-								nodes: [
-									{name: "Linkin Park", nodes: []},
-									{name: "Nickelback", nodes: []},
-								],
-							},
-						],
-					},
-					{
-						name: "2010",
-						nodes: [{name: "Pop", nodes: [{name: "Justin Bieber", nodes: []}]}],
-					},
-					{
-						name: "2020",
-						nodes: [{name: "Pop", nodes: [{name: "Dua Lipa", nodes: []}]}],
-					},
-				],
-			},
-			{
-				name: "Pictures",
-				nodes: [
-					{
-						name: "Selfies",
-						nodes: [
-							{name: "me.jpg", nodes: []},
-							{name: "me2.jpg", nodes: []},
-						],
-					},
-					{
-						name: "Vacation",
-						nodes: [
-							{name: "beach.jpg", nodes: []},
-							{name: "mountain.jpg", nodes: []},
-						],
-					},
-				],
-			},
-		],
-	},
-]);
 
 function App() {
 	let [selectedFile, setSelectedFile] = createSignal<string | null>(null);
+
 	return (
-		<main>
-			<div class="flex">
-				<For each={nodesData}>
-					{(n) => (
-						<Node
-							node={n}
-							selectFile={(file: string) => setSelectedFile(file)}
-						/>
-					)}
+		<main class="flex justify-between max-w-screen-md mx-auto my-20">
+			<div class="flex flex-col">
+				<For each={systemDataData}>
+					{(n) => {
+						return (
+							<FileSystemItem
+								node={n}
+								selectFile={(file: string) => {
+									setSelectedFile(file);
+								}}
+							/>
+						);
+					}}
 				</For>
-				<div>
-					<Show when={selectedFile()}>
-						<h2 class="text-xl font-bold">Selected file:</h2>
-						<p>{selectedFile()}</p>
-					</Show>
-				</div>
+			</div>
+			<div>
+				<Show
+					when={selectedFile()}
+					fallback={<h2 class="text-xl font-bold">No file selected</h2>}
+				>
+					<h2 class="text-xl font-bold">Selected file:</h2>
+					<p>{selectedFile()}</p>
+				</Show>
 			</div>
 		</main>
 	);
 }
 
-function Node({
+function FileSystemItem({
 	node,
 	selectFile,
-}: {node: Node; selectFile: (file: string) => void}) {
+}: {
+	node: FileSystemNode;
+	selectFile: (file: string) => void;
+}) {
 	let [isOpen, setIsOpen] = createSignal(false);
 	let hasNodes = node.nodes.length > 0;
 	return (
@@ -140,7 +73,7 @@ function Node({
 					<For each={node.nodes}>
 						{(n) => (
 							<li>
-								<Node node={n} selectFile={selectFile} />
+								<FileSystemItem node={n} selectFile={selectFile} />
 							</li>
 						)}
 					</For>
