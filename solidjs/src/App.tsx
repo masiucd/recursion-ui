@@ -7,6 +7,7 @@ type Node = {
 	name: string;
 	nodes: readonly Node[];
 };
+
 let nodesData: readonly Node[] = Object.freeze([
 	{
 		name: "Home",
@@ -82,14 +83,33 @@ let nodesData: readonly Node[] = Object.freeze([
 ]);
 
 function App() {
+	let [selectedFile, setSelectedFile] = createSignal<string | null>(null);
 	return (
 		<main>
-			<For each={nodesData}>{(n) => <Node node={n} />}</For>
+			<div class="flex">
+				<For each={nodesData}>
+					{(n) => (
+						<Node
+							node={n}
+							selectFile={(file: string) => setSelectedFile(file)}
+						/>
+					)}
+				</For>
+				<div>
+					<Show when={selectedFile()}>
+						<h2 class="text-xl font-bold">Selected file:</h2>
+						<p>{selectedFile()}</p>
+					</Show>
+				</div>
+			</div>
 		</main>
 	);
 }
 
-function Node({node}: {node: Node}) {
+function Node({
+	node,
+	selectFile,
+}: {node: Node; selectFile: (file: string) => void}) {
 	let [isOpen, setIsOpen] = createSignal(false);
 	let hasNodes = node.nodes.length > 0;
 	return (
@@ -97,7 +117,13 @@ function Node({node}: {node: Node}) {
 			<button
 				type="button"
 				class={cn("flex items-center gap-1 my-2", hasNodes ? "ml-2" : "ml-5")}
-				onClick={() => setIsOpen(!isOpen())}
+				onClick={() => {
+					if (hasNodes) {
+						setIsOpen(!isOpen());
+					} else {
+						selectFile(node.name);
+					}
+				}}
 			>
 				<Show when={hasNodes}>
 					<Show when={isOpen()} fallback={<ChevronRight />}>
@@ -114,7 +140,7 @@ function Node({node}: {node: Node}) {
 					<For each={node.nodes}>
 						{(n) => (
 							<li>
-								<Node node={n} />
+								<Node node={n} selectFile={selectFile} />
 							</li>
 						)}
 					</For>
