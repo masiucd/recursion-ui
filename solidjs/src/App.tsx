@@ -1,10 +1,12 @@
-import { createSignal } from 'solid-js'
-import solidLogo from './assets/solid.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {ChevronDown, ChevronRight, File, Folder} from "lucide-solid";
+import {createSignal} from "solid-js";
+import {For, Show} from "solid-js/web";
+import {cn} from "./utils";
 
-
-
+type Node = {
+	name: string;
+	nodes: readonly Node[];
+};
 let nodesData: readonly Node[] = Object.freeze([
 	{
 		name: "Home",
@@ -79,34 +81,47 @@ let nodesData: readonly Node[] = Object.freeze([
 	},
 ]);
 
-
 function App() {
-  const [count, setCount] = createSignal(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} class="logo" alt="Vite logo" />
-        </a>
-        <a href="https://solidjs.com" target="_blank">
-          <img src={solidLogo} class="logo solid" alt="Solid logo" />
-        </a>
-      </div>
-      <h1>Vite + Solid</h1>
-      <div class="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count()}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p class="read-the-docs">
-        Click on the Vite and Solid logos to learn more
-      </p>
-    </>
-  )
+	return (
+		<main>
+			<For each={nodesData}>{(n) => <Node node={n} />}</For>
+		</main>
+	);
 }
 
-export default App
+function Node({node}: {node: Node}) {
+	let [isOpen, setIsOpen] = createSignal(false);
+	let hasNodes = node.nodes.length > 0;
+	return (
+		<>
+			<button
+				type="button"
+				class={cn("flex items-center gap-1 my-2", hasNodes ? "ml-2" : "ml-5")}
+				onClick={() => setIsOpen(!isOpen())}
+			>
+				<Show when={hasNodes}>
+					<Show when={isOpen()} fallback={<ChevronRight />}>
+						<ChevronDown />
+					</Show>
+				</Show>
+				<Show when={hasNodes} fallback={<File />}>
+					<Folder />
+				</Show>
+				<span>{node.name}</span>
+			</button>
+			<Show when={isOpen()}>
+				<ul class="pl-4">
+					<For each={node.nodes}>
+						{(n) => (
+							<li>
+								<Node node={n} />
+							</li>
+						)}
+					</For>
+				</ul>
+			</Show>
+		</>
+	);
+}
+
+export default App;
